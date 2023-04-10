@@ -33,6 +33,26 @@ version 1.1
     background: #fff0f0;
 }
 
+.blog-title {
+    line-height: 70px;
+    font-size: 32px;
+}
+
+.map-wrapper {
+    position: relative;
+    height: 0;
+    padding-bottom: 56.25%; /* 16:9 aspect ratio */
+  }
+  
+  .map-wrapper iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  
 body {
     color: #000000;
     /* TODO: Make line height smaller */
@@ -187,7 +207,7 @@ img.block-right {
     align-items: flex-start;
     margin-bottom: 20px; 
     font-weight: 700; 
-    letter-spacing: 5px;
+    letter-spacing: 6.4px;
     color: #f44647;
 }
 
@@ -703,6 +723,34 @@ img.block-right {
     cursor: pointer;
 }
 
+/* Portfolio popup overlay */
+.portfolio-popup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    z-index: 9999;
+    display: none;
+}
+
+/* Portfolio popup content */
+.portfolio-popup-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80%;
+    max-width: 800px;
+    background-color: #fff;
+    border-radius: 5px;
+    padding: 30px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
+    overflow-y: auto;
+    max-height: 90vh;
+}
+
 .close-icon:hover {
     background-position: -5px 0;
 }
@@ -933,7 +981,6 @@ div.pp_default .pp_description {
 .skills-history li:hover .date {
     -webkit-transform: translateX(15px);
     transform: translateX(15px);
-    color: #000;
 }
 
 .skills-history li p {
@@ -943,11 +990,12 @@ div.pp_default .pp_description {
     cursor: default;
     transition: .35s ease-out;
     margin-bottom: 0;
+    line-height: 28px;
 }
 
 .skills-history li:hover p {
-    -webkit-transform: translateX(-15px);
-    transform: translateX(-15px);
+    -webkit-transform: translateX(-55px);
+    transform: translateX(-55px);
 }
 
 .skills-progress {
@@ -1665,6 +1713,108 @@ p.contact-submit-holder {
         width: 100%;
         float: none;
         margin-left: 0;
+    }
+
+    .portfolio-text-holder {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        left: 0;
+        top: 0;
+        z-index: 1;
+        font-size: 20px;
+        background-color: #000000;
+        padding: 20px;
+        transform: translateX(-100%);
+        transition: transform .3s ease;
+        opacity: .8;
+        transform: translateX(0);
+    }
+    
+    .grid-item a.item-link:hover .portfolio-text-holder,
+    .grid-item.portfolio-content-loading a.item-link .portfolio-text-holder {
+        transform: translateX(0);
+    }
+
+    .nav-list li a {
+        font-size: 25px;
+        display: inline-block;
+    }
+
+    .portfolio-item-mobile {
+        display: none;
+        margin-bottom: 20px;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+      }
+      
+      .portfolio-item-mobile .portfolio-image {
+        width: 100px;
+        float: left;
+        margin-right: 10px;
+      }
+      
+      .portfolio-item-mobile .portfolio-image img {
+        max-width: 100%;
+        height: auto;
+        display: block;
+      }
+      
+      .portfolio-item-mobile .portfolio-content {
+        overflow: hidden;
+        padding-top: 5px;
+      }
+      
+      .portfolio-item-mobile .portfolio-title {
+        font-size: 18px;
+        margin: 0;
+        color: #222;
+      }
+      
+      .portfolio-item-mobile .portfolio-description {
+        font-size: 14px;
+        margin: 5px 0 0 0;
+        color: #777;
+      }
+      
+      .grid-item.active {
+        margin-bottom: 20px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+      }
+
+      /* Portfolio popup overlay */
+    .portfolio-popup {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.8);
+        z-index: 9999;
+        display: none;
+    }
+
+    /* Portfolio popup content */
+    .portfolio-popup-content {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 90%;
+        max-width: 800px;
+        background-color: #fff;
+        border-radius: 5px;
+        padding: 30px;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
+        overflow-y: auto;
+        max-height: 90vh;
+    }
+
+    .blog-title {
+        line-height: 60px;
+        font-size: 30px;
     }
 
 }

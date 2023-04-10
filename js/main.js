@@ -170,11 +170,12 @@
     }
 
     function portfolioItemContentLoadOnClick() {
+        // return false;
         $('.ajax-portfolio').on('click', function (e) {
             e.preventDefault();
             var portfolioItemID = $(this).data('id');
-            $(this).closest('.grid-item').addClass('portfolio-content-loading');
-            $('#portfolio-grid').addClass('portfoio-items-mask');
+            // $(this).closest('.grid-item').addClass('portfolio-content-loading');
+            // $('#portfolio-grid').addClass('portfoio-items-mask');
             if ($("#pcw-" + portfolioItemID).length) {
                 $('html, body').animate({scrollTop: $('#portfolio-wrapper').offset().top - 150}, 400);
                 setTimeout(function () {
@@ -198,42 +199,37 @@
             type: 'GET',
             success: function (html) {
                 var getPortfolioItemHtml = $(html).find(".portfolio-item-wrapper").html();
-                $('.portfolio-load-content-holder').append('<div id="pcw-' + portfolioItemID + '" class="portfolio-content-wrapper">' + getPortfolioItemHtml + '</div>');
-                if (!$("#pcw-" + portfolioItemID + " .close-icon").length) {
-                    $("#pcw-" + portfolioItemID).prepend('<div class="close-icon"></div>');
+                var $popup = $('<div class="portfolio-popup"></div>');
+                var $popupContent = $('<div class="portfolio-popup-content"></div>').appendTo($popup);
+                $popupContent.html(getPortfolioItemHtml);
+                if (!$popupContent.find(".close-icon").length) {
+                    $popupContent.prepend('<div class="close-icon"></div>');
                 }
-                $('html, body').animate({scrollTop: $('#portfolio-wrapper').offset().top - 150}, 400);
-                setTimeout(function () {
-                    $("#pcw-" + portfolioItemID).imagesLoaded(function () {
-                        imageSliderSetUp();
-                        setSlowScroll();
-                        fitVideo();
-                        $('#portfolio-grid').addClass('hide');
-                        setTimeout(function () {
-                            $("#pcw-" + portfolioItemID).addClass('show');
-                            $('.portfolio-load-content-holder').addClass('show');
-                            $('.grid-item').removeClass('portfolio-content-loading');
-                            $('#portfolio-grid').hide().removeClass('portfoio-items-mask');
-                        }, 300);
-                        $('.close-icon').on('click', function (e) {
-                            var portfolioReturnItemID = $(this).closest('.portfolio-content-wrapper').attr("id").split("-")[1];
-                            $('.portfolio-load-content-holder').addClass("viceversa");
-                            $('#portfolio-grid').css('display', 'block');
-                            setTimeout(function () {
-                                $('#pcw-' + portfolioReturnItemID).removeClass('show');
-                                $('.portfolio-load-content-holder').removeClass('viceversa show');
-                                $('#portfolio-grid').removeClass('hide');
-                            }, 300);
-                            setTimeout(function () {
-                                $('html, body').animate({scrollTop: $('#p-item-' + portfolioReturnItemID).offset().top - 150}, 400);
-                            }, 500);
-                        });
+                $('body').append($popup);
+                $('html').addClass('portfolio-popup-active');
+                $popup.fadeIn();
+                $('.close-icon').on('click', function (e) {
+                    e.preventDefault();
+                    $popup.fadeOut(function() {
+                        $popup.remove();
+                        $('html').removeClass('portfolio-popup-active');
                     });
-                }, 500);
+                });
+                $popup.on('click', function (e) {
+                    if ($(e.target).hasClass('portfolio-popup')) {
+                        $popup.fadeOut(function() {
+                            $popup.remove();
+                            $('html').removeClass('portfolio-popup-active');
+                        });
+                    }
+                });
             }
         });
         return false;
     }
+    
+    
+    
 
     function imageSliderSetUp() {
         $(".image-slider").each(function () {
